@@ -1,3 +1,5 @@
+'use strict';
+
 window.addEventListener('DOMContentLoaded', () => {
 
   //Tabs
@@ -52,9 +54,9 @@ window.addEventListener('DOMContentLoaded', () => {
       minutes = 0;
       seconds = 0;
     } else {
-      days = Math.floor(t / (1000 * 60 * 60 * 24)),
-      hours = Math.floor((t / (1000 * 60 * 60)) % 24),
-      minutes = Math.floor((t / (1000 * 60)) % 60),
+      days = Math.floor(t / (1000 * 60 * 60 * 24));
+      hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+      minutes = Math.floor((t / (1000 * 60)) % 60);
       seconds = Math.floor((t / 1000) % 60);
     }
           
@@ -156,4 +158,66 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   window.addEventListener('scroll', showModalByScroll);
+
+  //menu
+
+  const menu = document.querySelector('.menu'),
+        menuContainer = menu.querySelector('.container');
+
+  menuContainer.innerHTML = '';
+
+  function createElement(tag, options = {}) {
+    const element = document.createElement(tag);
+    options.className && (element.className = options.className);
+    options.textContent && (element.textContent = options.textContent);
+    options.innerText && (element.innerText = options.innerText);
+    options.placeholder && (element.placeholder = options.placeholder);
+    return element;
+  }
+  
+  class Product {
+    constructor(img, name, description, price) {
+      this.img = img;
+      this.name = `Меню "${name}"`;
+      this.description = description;
+      this.price = price;
+    }
+  }
+
+  const products = [];
+
+  const product1 = new Product('img/tabs/vegy.jpg', 'Фитнес', 'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 229);
+
+  const product2 = new Product('img/tabs/elite.jpg', 'Премиум', 'В меню "Премиум" мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!', 550);
+
+  const product3 = new Product('img/tabs/post.jpg','Постное', 'Меню "Постное" - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.', 430);
+
+  products.push(product1, product2, product3);
+
+  console.log(products);
+
+  products.forEach((product) => {
+
+    const menuItem = createElement('div', {className: 'menu__item'});
+    const menuItemImg = createElement('img');
+    const menuItemSubtitle = createElement('div', {className: 'menu__item-subtitle'});
+    const menuItemDescr = createElement('div', {className: 'menu__item-descr'});
+    const menuItemDivider = createElement('div', {className: 'menu__item-divider'});
+    const menuItemPrice = createElement('div', {className: 'menu__item-price'});
+    const menuItemPriceCost = createElement('div', {className: 'menu__item-cost', innerText: 'Цена:'});
+    const menuItemPriceTotal = createElement('div', {className: 'menu__item-total', innerText: ' грн/день'});
+    const menuItemPriceTotalSpan = createElement('span');
+
+    menuItemImg.src = product.img;
+    menuItemSubtitle.innerText = product.name;
+    menuItemDescr.innerText = product.description;
+    menuItemPriceTotalSpan.innerText = product.price;
+
+    menuItem.append(menuItemImg, menuItemSubtitle, menuItemDescr, menuItemDivider, menuItemPrice);
+    menuItemPrice.append(menuItemPriceCost, menuItemPriceTotal);
+    menuItemPriceTotal.prepend(menuItemPriceTotalSpan);
+
+    menuContainer.append(menuItem);
+  });
 });
+
