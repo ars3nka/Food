@@ -158,23 +158,15 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   window.addEventListener('scroll', showModalByScroll);
-
-  function createElement(tag, options = {}) {
-    const element = document.createElement(tag);
-    options.className && (element.className = options.className);
-    options.textContent && (element.textContent = options.textContent);
-    options.innerText && (element.innerText = options.innerText);
-    options.placeholder && (element.placeholder = options.placeholder);
-    return element;
-  }
   
   class Product {
-    constructor(img, altImg, name, description, price, parentSelector) {
+    constructor(img, altImg, name, description, price, parentSelector, ...classes) {
       this.img = img;
       this.altImg = altImg;
       this.name = name;
       this.description = description;
       this.price = price;
+      this.classes = classes;
       this.parent = document.querySelector(parentSelector);
       this.tranfer = 27;
       this.changeToUAH();
@@ -185,7 +177,16 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     render() {
-      const element = createElement('div', {className: 'menu__item'});
+      const element = document.createElement('div');
+      
+      if (this.classes.length === 0) {
+        element.classList.add('menu__item');
+      } else {
+        this.classes.forEach((className) => {
+          element.classList.add(className);
+        });
+      }
+      
       element.innerHTML = `
         <img src=${this.img} alt=${this.altImg}">
         <h3 class="menu__item-subtitle">${this.name}</h3>
