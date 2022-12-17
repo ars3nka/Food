@@ -12,11 +12,19 @@
   },
   "author": "Arseni Pazniak",
   "license": "ISC",
+  "browserslist": [
+    "> 1%"
+  ],
   "bugs": {
     "url": "https://github.com/ars3nka/Food/issues"
   },
   "homepage": "https://github.com/ars3nka/Food#readme",
   "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.20.5",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^9.1.0",
+    "core-js": "^3.26.1",
     "json-server": "^0.17.1",
     "webpack-cli": "^5.0.1"
   }
